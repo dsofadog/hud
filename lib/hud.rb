@@ -18,9 +18,10 @@ module Hud
     include Mote::Helpers 
     def bind(data:); end
     class Controller      
-      attr_reader :screen
-      def initialize(screen:)
+      attr_reader :screen,:params
+      def initialize(screen:,params:)
         @screen = screen
+        @params = params
       end
       def call
         screen.bind(data:[])
