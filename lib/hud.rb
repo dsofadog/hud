@@ -20,8 +20,16 @@ module Hud
   end
   
   class Screen
+
+    def self.inhereted(subclass)
+      controller = Class.new(Hud::Screen::Controller) do
+
+      end
+      Object.const_set Controller, controller
+    end
+
     attr_reader :overides
-    include Mote::Helpers
+    include Mote::Helpers 
     def initialize(overides: {})
       @overides = overides
     end 
@@ -37,7 +45,6 @@ module Hud
         screen.render
       end
     end
-
     def overide(name:,value:)
       @overides[name] = value
       self
