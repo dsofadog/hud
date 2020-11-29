@@ -35,8 +35,7 @@ module Hud
     end
 
     def render
-        params = get_params
-        return overide unless overide.nil?
+        params = overide ? overide : get_params
         mote("#{Hud.configuration.screens_dir}/.defaults/layout.mote",params)
     end
 
