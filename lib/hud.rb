@@ -20,12 +20,13 @@ module Hud
   end
   
   class Screen
-
     def self.inhereted(subclass)
-      controller = Class.new(Hud::Screen::Controller) do
-
-      end
+      controller = Class.new(Hud::Screen::Controller)
       Object.const_set Controller, controller
+    end
+
+    def display(params:)
+      Controller.new(screen: self,params: params).call
     end
 
     attr_reader :overides
