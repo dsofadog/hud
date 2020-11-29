@@ -7,7 +7,12 @@ module Hud
   class Error < StandardError; end
 
   def self.configuration
-    @configuration ||= OpenStruct.new({screens_dir: "./screens"})
+    @configuration ||= OpenStruct.new(
+      {
+        screens_dir: "./screens",
+        parts: [:body,:title]
+      }
+    )
   end
   
   def self.configure
@@ -23,8 +28,8 @@ module Hud
         @screen = screen
         @params = params
       end
-      def call
-        screen.bind(data:[])
+      def call(data: [])
+        screen.bind(data: data)
         screen.render
       end
     end
@@ -44,12 +49,16 @@ module Hud
     def get_params
       params = {}
 
-      [:body,:title].each do |symbol|
+      Hud.configuration.parts.each do |symbol|
         content = ""
         begin
+          puts "getting overides from  #{screens_dir(overided: true)}/#{symbol}.mote"
           content = mote("#{screens_dir(overided: true)}/#{symbol}.mote")
+          puts "got overides - ok"
         rescue => exception
+          puts "getting default from #{screens_dir}/#{symbol}.mote"
           content = mote("#{screens_dir}/#{symbol}.mote")
+          puts "got defaults - ok"
         ensure
           params[symbol] = content
         end
