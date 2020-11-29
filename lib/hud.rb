@@ -20,10 +20,14 @@ module Hud
   end
   
   class Screen
-    include Mote::Helpers 
+    attr_reader :overides
+    include Mote::Helpers
+    def initialize(overides: {})
+      @overides = overides
+    end 
     def bind(data:); end
     class Controller      
-      attr_reader :screen,:params
+      attr_reader :screen,:params,:overides
       def initialize(screen:,params:)
         @screen = screen
         @params = params
@@ -35,27 +39,23 @@ module Hud
     end
 
     def render
-        params = !overides.values.empty? ? overides : get_params
+        params = !param_overides.values.empty? ? param_overides : get_params
         mote("#{Hud.configuration.screens_dir}/.defaults/layout.mote",params)
     end
-    
-    def overide(key)
-      nil
-    end
-    
-    def overides
-      data = {}
-      Hud.configuration.parts.each do |symbol|
-        data[symbol] = overide(symbol) if overide(symbol) 
-      end
-      data
-    end
-
+  
     def to_s
       render
     end
     
     private
+
+    def param_overides
+      data = {}
+      Hud.configuration.parts.each do |symbol|
+        data[symbol] = @overides[symbol] if overide(symbol) 
+      end
+      data
+    end
 
     def get_params
       params = {}
