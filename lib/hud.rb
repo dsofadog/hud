@@ -25,7 +25,7 @@ module Hud
       Object.const_set Controller, controller
     end
 
-    def controller(params:)
+    def controller(params:{})
       Controller.new(screen: self,params: params)
     end
 
