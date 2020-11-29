@@ -38,6 +38,11 @@ module Hud
       end
     end
 
+    def overide(name:,value:)
+      @overides[name] = value
+      self
+    end
+
     def render
         params = !param_overides.values.empty? ? param_overides : get_params
         mote("#{Hud.configuration.screens_dir}/.defaults/layout.mote",params)
