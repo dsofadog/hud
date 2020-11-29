@@ -68,7 +68,7 @@ module Hud
     end
     def screens_dir(overided: false)
       return "#{Hud.configuration.screens_dir}/.defaults" unless overided
-      "#{Hud.configuration.screens_dir}/#{self.class.name.gsub(/\w*::\w*/,"").gsub("Screen","").downcase}"
+      "#{Hud.configuration.screens_dir}/#{self.class.name.gsub(/\w*::/,"").gsub("Screen","").downcase}"
     end
   end
 end
