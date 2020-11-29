@@ -52,7 +52,7 @@ module Hud
     def param_overides
       data = {}
       Hud.configuration.parts.each do |symbol|
-        data[symbol] = @overides[symbol] if overide(symbol) 
+        data[symbol] = @overides[symbol] if @overides.has_key? symbol
       end
       data
     end
