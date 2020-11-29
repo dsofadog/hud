@@ -25,8 +25,8 @@ module Hud
       Object.const_set Controller, controller
     end
 
-    def display(params:)
-      Controller.new(screen: self,params: params).call
+    def controller(params:)
+      Controller.new(screen: self,params: params)
     end
 
     attr_reader :overides
@@ -36,14 +36,17 @@ module Hud
     end 
     def bind(data:); end
     class Controller      
-      attr_reader :screen,:params,:overides
-      def initialize(screen:,params:)
+      def initialize(screen:,params:,data:[])
         @screen = screen
         @params = params
+        @data = []
       end
-      def call(data: [])
-        screen.bind(data: data)
+      def call
+        screen.bind(data: @data)
         screen.render
+      end
+      def to_s
+        call
       end
     end
     def overide(name:,value:)
@@ -59,6 +62,11 @@ module Hud
       render
     end
     
+
+    alias_method :display, :controller
+    alias_method :to_json, :controller
+    alias_method :to_html, :controller
+
     private
 
     def get_params
