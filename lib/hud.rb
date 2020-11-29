@@ -52,11 +52,11 @@ module Hud
       Hud.configuration.parts.each do |symbol|
         content = ""
         begin
-          puts "getting overides from  #{screens_dir(overided: true)}/#{symbol}.mote"
+          puts "getting overides ->  #{screens_dir(overided: true)}/#{symbol}.mote"
           content = mote("#{screens_dir(overided: true)}/#{symbol}.mote")
           puts "got overides - ok"
         rescue => exception
-          puts "getting default from #{screens_dir}/#{symbol}.mote"
+          puts "getting default -> #{screens_dir}/#{symbol}.mote"
           content = mote("#{screens_dir}/#{symbol}.mote")
           puts "got defaults - ok"
         ensure
