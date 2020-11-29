@@ -35,11 +35,20 @@ module Hud
     end
 
     def render
-        params = overide ? overide : get_params
+        params = !overides.values.empty? ? overides : get_params
         mote("#{Hud.configuration.screens_dir}/.defaults/layout.mote",params)
     end
-
-    def overide
+    
+    def overide(key)
+      nil
+    end
+    
+    def overides
+      data = {}
+      Hud.configuration.parts.each do |symbol|
+        data[symbol] = overide(symbol) if overide(symbol) 
+      end
+      data
     end
 
     def to_s
