@@ -6,6 +6,8 @@ module Hud
   
   class Error < StandardError; end
 
+  ##################### Config ##################### 
+
   def self.configuration
     @configuration ||= OpenStruct.new(
       {
@@ -14,12 +16,17 @@ module Hud
       }
     )
   end
-  
+
   def self.configure
     yield(configuration)
   end
   
+
+  ##################### Screen ##################### 
   class Screen
+    include Mote::Helpers 
+    attr_reader :overides
+    
     def self.inhereted(subclass)
       controller = Class.new(Hud::Screen::Controller)
       Object.const_set Controller, controller
@@ -32,17 +39,19 @@ module Hud
       render
     end
 
-
+  
     def controller(params:{})
       Controller.new(screen: self,params: params)
     end
 
-    attr_reader :overides
-    include Mote::Helpers 
     def initialize(overides: {})
       @overides = overides
     end 
+    
     def bind(data:); end
+
+    ##################### contoller ##################### 
+
     class Controller      
       attr_reader :screen
       def initialize(screen:,params:,data:[])
@@ -58,24 +67,20 @@ module Hud
         call
       end
     end
+    
     def overide(name:,value:)
       @overides[name] = value
       self
     end
-
-    def render
-        mote("#{Hud.configuration.screens_dir}/.defaults/layout.mote",get_params)
-    end
-  
+    
     def to_s
       render
     end
     
-
-    alias_method :display, :controller
-    alias_method :to_json, :controller
-    alias_method :to_html, :controller
-
+    def render
+        mote("#{Hud.configuration.screens_dir}/.defaults/layout.mote",get_params)
+    end
+  
     private
 
     def get_params
@@ -109,5 +114,9 @@ module Hud
       return "#{Hud.configuration.screens_dir}/.defaults" unless overided
       "#{Hud.configuration.screens_dir}/#{self.class.name.gsub(/\w*::/,"").gsub("Screen","").downcase}"
     end
+ 
+    alias_method :display, :controller
+    alias_method :to_json, :controller
+    alias_method :to_html, :controller
   end
 end
