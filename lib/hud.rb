@@ -36,6 +36,7 @@ module Hud
     end 
     def bind(data:); end
     class Controller      
+      attr_reader :screen
       def initialize(screen:,params:,data:[])
         @screen = screen
         @params = params
