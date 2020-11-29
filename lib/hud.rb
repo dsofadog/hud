@@ -44,8 +44,7 @@ module Hud
     end
 
     def render
-        params = !param_overides.values.empty? ? param_overides : get_params
-        mote("#{Hud.configuration.screens_dir}/.defaults/layout.mote",params)
+        mote("#{Hud.configuration.screens_dir}/.defaults/layout.mote",get_params)
     end
   
     def to_s
@@ -54,20 +53,19 @@ module Hud
     
     private
 
-    def param_overides
-      data = {}
-      Hud.configuration.parts.each do |symbol|
-        data[symbol] = @overides[symbol] if @overides.has_key? symbol
-      end
-      data
-    end
-
     def get_params
       params = {}
 
       Hud.configuration.parts.each do |symbol|
         content = ""
+        
         begin
+          
+          if overides.has_key? symbol
+            content = overides[symbol] 
+            next
+          end
+
           puts "getting overides ->  #{screens_dir(overided: true)}/#{symbol}.mote"
           content = mote("#{screens_dir(overided: true)}/#{symbol}.mote")
           puts "got overides - ok"
