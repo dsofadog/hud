@@ -28,6 +28,10 @@ module Hud
     def self.render
       new.display
     end
+    def self.display
+      render
+    end
+
 
     def controller(params:{})
       Controller.new(screen: self,params: params)
