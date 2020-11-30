@@ -94,12 +94,13 @@ module Hud
         begin
           
           if overides.has_key? symbol
+            puts "overided ->> #{symbol}"
             content = overides[symbol] 
             next
           end
 
           puts "getting overides ->  #{screens_dir(overided: true)}/#{symbol}.mote"
-          content = mote("#{screens_dir(overided: true)}/#{symbol}.mote",local)
+          content = mote("#{screens_dir(overided: true)}/#{symbol}.mote",{})
           puts "got overides - ok"
         rescue => exception
           puts "getting default -> #{screens_dir}/#{symbol}.mote"
