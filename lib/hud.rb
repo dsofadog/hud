@@ -103,6 +103,9 @@ module Hud
           content = mote("#{screens_dir(overided: true)}/#{symbol}.mote")
           puts "got overides - ok"
         rescue => exception
+          puts "*****************"
+          puts exception
+          puts "*****************"
           puts "getting default -> #{screens_dir}/#{symbol}.mote"
           content = mote("#{screens_dir}/#{symbol}.mote")
           puts "got defaults - ok"
