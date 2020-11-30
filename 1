@@ -1,0 +1,24 @@
+add the self
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Changes to be committed:
+#	modified:   lib/hud.rb
+#
+# ------------------------ >8 ------------------------
+# Do not modify or remove the line above.
+# Everything below it will be ignored.
+diff --git a/lib/hud.rb b/lib/hud.rb
+index a7b3b8b..c330c49 100644
+--- a/lib/hud.rb
++++ b/lib/hud.rb
+@@ -100,7 +100,7 @@ module Hud
+           end
+ 
+           puts "getting overides ->  #{screens_dir(overided: true)}/#{symbol}.mote"
+-          content = mote("#{screens_dir(overided: true)}/#{symbol}.mote")
++          content = mote("#{screens_dir(overided: true)}/#{symbol}.mote",self,{})
+           puts "got overides - ok"
+         rescue => exception
+           puts "*****************"
