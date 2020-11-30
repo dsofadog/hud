@@ -87,33 +87,20 @@ module Hud
 
     def get_params
       params = {}
-
       Hud.configuration.parts.each do |symbol|
         content = ""
-        
         begin
-          
           if overides.has_key? symbol
-            puts "overided ->> #{symbol}"
             content = overides[symbol] 
             next
           end
-
-          puts "getting overides ->  #{screens_dir(overided: true)}/#{symbol}.mote"
           content = mote("#{screens_dir(overided: true)}/#{symbol}.mote",local)
-          puts "got overides - ok"
         rescue => exception
-          puts "*****************"
-          puts exception
-          puts "*****************"
-          puts "getting default -> #{screens_dir}/#{symbol}.mote"
-          content = mote("#{screens_dir}/#{symbol}.mote")
-          puts "got defaults - ok"
+          content = mote("#{screens_dir}/#{symbol}.mote")        
         ensure
           params[symbol] = content
         end
       end
-      
       params
     end
     def screens_dir(overided: false)
