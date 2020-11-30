@@ -47,7 +47,7 @@ module Hud
 
     def initialize(overides: {},local: {})
       @overides = overides
-      @local_overides = local
+      @local = local
     end 
     
     def bind(data:); end
