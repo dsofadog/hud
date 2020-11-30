@@ -100,7 +100,7 @@ module Hud
           end
 
           puts "getting overides ->  #{screens_dir(overided: true)}/#{symbol}.mote"
-          content = mote("#{screens_dir(overided: true)}/#{symbol}.mote",locals,{})
+          content = mote("#{screens_dir(overided: true)}/#{symbol}.mote",local)
           puts "got overides - ok"
         rescue => exception
           puts "*****************"
