@@ -26,8 +26,7 @@ module Hud
   class Screen
     include Mote::Helpers 
     attr_reader :overides
-    attr_reader :local
-    
+
     def self.inhereted(subclass)
       controller = Class.new(Hud::Screen::Controller)
       Object.const_set Controller, controller
@@ -45,9 +44,8 @@ module Hud
       Controller.new(screen: self,params: params)
     end
 
-    def initialize(overides: {},local: {})
+    def initialize(overides: {})
       @overides = overides
-      @local = local
     end 
     
     def bind(data:); end
@@ -70,16 +68,9 @@ module Hud
       end
     end
     
-    def overide(name:,value:,scope: :local)
-      if scope == :local
-        @local[name] = value 
-        return self
-      end
-      
-      @overides[name] = value if scope == :global
-      
+    def overide(name:,value:)
+      @overides[name] = value 
       self
-      
     end
     
     def to_s
@@ -101,7 +92,7 @@ module Hud
             content = overides[symbol] 
             next
           end
-          content = mote("#{screens_dir(overided: true)}/#{symbol}.mote",local)
+          content = mote("#{screens_dir(overided: true)}/#{symbol}.mote",self)
         rescue => exception
           content = mote("#{screens_dir}/#{symbol}.mote")        
         ensure
