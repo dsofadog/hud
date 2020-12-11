@@ -6,4 +6,5 @@ gemspec
 gem "rake", "~> 12.0"
 gem "mote"
 gem "thor"
+gem "rspec"
 
