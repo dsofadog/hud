@@ -71,9 +71,15 @@ module Hud
     end
     
     def overide(name:,value:,scope: :local)
-      @local[name] = value if scope == :local
+      if scope == :local
+        @local[name] = value 
+        return self
+      end
+      
       @overides[name] = value if scope == :global
+      
       self
+      
     end
     
     def to_s
