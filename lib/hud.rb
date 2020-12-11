@@ -70,8 +70,9 @@ module Hud
       end
     end
     
-    def overide(name:,value:)
-      @overides[name] = value
+    def overide(name:,value:,scope: :local)
+      @local[name] = value if scope == :local
+      @overides[name] = value if scope == :global
       self
     end
     
