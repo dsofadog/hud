@@ -31,8 +31,8 @@ module Hud
       @overides = overides  
     end 
     
-    def overide(name:,value:,scope: :global)
-      @overides[name] = value  if scope == :global
+    def overide(name:,value:)
+      @overides[name] = value
       self
     end
     
