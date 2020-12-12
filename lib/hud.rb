@@ -27,61 +27,22 @@ module Hud
     include Mote::Helpers 
     attr_reader :overides
 
-    def self.inhereted(subclass)
-      controller = Class.new(Hud::Screen::Controller)
-      Object.const_set Controller, controller
-    end
-
-    def self.render
-      new.display
-    end
-    def self.display
-      render
-    end
-
-  
-    def controller(params:{})
-      Controller.new(screen: self,params: params)
-    end
-
     def initialize(overides: {})
-      @overides = overides
+      @overides = overides  
     end 
-    
-    def bind(data:); end
-
-    ##################### contoller ##################### 
-
-    class Controller      
-      attr_reader :screen
-      def initialize(screen:,params:,data:[])
-        @screen = screen
-        @params = params
-        @data = []
-      end
-      def call
-        screen.bind(data: @data)
-        screen.render
-      end
-      def to_s
-        call
-      end
-    end
     
     def overide(name:,value:)
       @overides[name] = value 
       self
     end
     
-    def to_s
-      render
+    def render
+      puts "called render"
+      mote("#{Hud.configuration.screens_dir}/layout.mote",get_params)
     end
     
-    def render
-        mote("#{Hud.configuration.screens_dir}/.defaults/layout.mote",get_params)
-    end
-  
     private
+
 
     def get_params
       params = {}
@@ -92,7 +53,7 @@ module Hud
             content = overides[symbol] 
             next
           end
-          content = mote("#{screens_dir(overided: true)}/#{symbol}.mote",get_params)
+          content = mote("#{screens_dir(overided: true)}/#{symbol}.mote",{})
         rescue => exception
           content = mote("#{screens_dir}/#{symbol}.mote")        
         ensure
@@ -101,13 +62,13 @@ module Hud
       end
       params
     end
+    
     def screens_dir(overided: false)
-      return "#{Hud.configuration.screens_dir}/.defaults" unless overided
+      return "#{Hud.configuration.screens_dir}" unless overided
       "#{Hud.configuration.screens_dir}/#{self.class.name.gsub(/\w*::/,"").gsub("Screen","").downcase}"
     end
- 
-    alias_method :display, :controller
-    alias_method :to_json, :controller
-    alias_method :to_html, :controller
+
+    alias_method :to_json, :render
+    alias_method :to_html, :render
   end
 end
