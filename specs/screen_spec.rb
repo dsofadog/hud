@@ -4,6 +4,21 @@ describe 'Screen' do
   context "override using a file" do
     it 'to_html defaults' do
       Hud.configure do |config|
+         config.screens_dir = "./specs/overridenscreens-local" 
+      end 
+      class TestScreen < Hud::Screen; end
+      content = TestScreen.new
+                  .overide(name: :state, value: "local")
+                  .to_html
+  
+      expect(content).to eql "# Title\n- Body (local)\n"
+    end 
+
+  end
+
+  context "override using a file" do
+    it 'to_html defaults' do
+      Hud.configure do |config|
          config.screens_dir = "./specs/overridenscreens" 
       end 
       class TestScreen < Hud::Screen; end
