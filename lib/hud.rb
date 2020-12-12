@@ -52,7 +52,7 @@ module Hud
             content = overides[symbol] 
             next
           end
-          content = mote("#{screens_dir(overided: true)}/#{symbol}.mote",{})
+          content = mote("#{screens_dir(overided: true)}/#{symbol}.mote",overides)
         rescue => exception
           content = mote("#{screens_dir}/#{symbol}.mote")        
         ensure
