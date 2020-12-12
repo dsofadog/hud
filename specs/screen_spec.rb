@@ -8,10 +8,9 @@ describe 'Screen' do
       end 
       class TestScreen < Hud::Screen; end
       content = TestScreen.new
-                  .overide(name: :state, value: "local")
-                  .to_html
+                .to_html
   
-      expect(content).to eql "# Title\n- Body (local)\n"
+      expect(content).to eql "# Title\n- Body"
     end 
 
   end
