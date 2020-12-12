@@ -37,7 +37,6 @@ module Hud
     end
     
     def render
-      puts "called render"
       mote("#{Hud.configuration.screens_dir}/layout.mote",get_params)
     end
     
@@ -62,7 +61,7 @@ module Hud
       end
       params
     end
-    
+
     def screens_dir(overided: false)
       return "#{Hud.configuration.screens_dir}" unless overided
       "#{Hud.configuration.screens_dir}/#{self.class.name.gsub(/\w*::/,"").gsub("Screen","").downcase}"
