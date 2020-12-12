@@ -1,6 +1,28 @@
 require "hud"
 
 describe 'Screen' do
+  context "override using a file" do
+    it 'to_html defaults' do
+      Hud.configure do |config|
+         config.screens_dir = "./specs/overridenscreens" 
+      end 
+      class TestScreen < Hud::Screen; end
+      content = TestScreen.new.to_html
+  
+      expect(content).to eql "# Title\n- Body"
+    end 
+    it 'to_html for index' do
+      Hud.configure do |config|
+         config.screens_dir = "./specs/overridenscreens" 
+      end 
+      class IndexScreen < Hud::Screen; end
+      content = IndexScreen.new.to_html
+  
+      expect(content).to eql "# Title (overidden)\n- Body (overidden)"
+    end 
+   
+  end
+  
   context "#render" do
     it 'to_html' do
         Hud.configure do |config|
@@ -10,7 +32,7 @@ describe 'Screen' do
         content = TestScreen.new.to_html
     
         expect(content).to eql "# Title\n- Body"
-      end 
+    end 
   end
   it 'to_html with overidden body' do
     Hud.configure do |config|
